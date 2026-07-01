@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOYSOURCE | Global Supply Chain Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .quiz-step { display: none; }
+        .quiz-step.active { display: block; }
+        .logo-deactivated { filter: none !important; opacity: 0.85; transition: opacity 0.3s; }
+        .logo-deactivated:hover { opacity: 1; }
+    </style>
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans antialiased selection:bg-amber-500 selection:text-black">
+
+    <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-6 bg-stone-950 shadow-2xl relative border-x border-stone-900">
+        
+        <!-- Header -->
+        <header class="text-center my-2">
+            <div class="text-[10px] tracking-[0.2em] text-amber-500 font-black uppercase">Joysource</div>
+            <h1 class="text-xl font-black tracking-tight uppercase mt-1">Cost Mitigation Matrix</h1>
+            <p class="text-[11px] text-stone-400 mt-0.5">Ex-Factory Custom Price Analysis for Strategic Markets</p>
+        </header>
+
+        <!-- Main Funnel Block -->
+        <main class="flex-grow flex flex-col justify-center my-4">
+            <form id="funnelForm" onsubmit="handleFunnelSubmit(event)">
+                
+                <!-- STEP 1: Premium Aesthetic Selection -->
+                <div class="quiz-step active" id="step1">
+                    <h2 class="text-xs font-bold uppercase tracking-widest mb-4 text-stone-400 text-center">1. Select Design Profile</h2>
+                    <div class="grid grid-cols-1 gap-3">
+                        <!-- Card 1 -->
+                        <label class="relative border border-stone-850 rounded-xl overflow-hidden cursor-pointer block hover:border-amber-500 transition-all duration-300 bg-stone-900 group">
+                            <input type="radio" name="style" value="Integrated Minimalism" class="sr-only" checked onclick="goToStep(2)">
+                            <div class="w-full h-32 bg-stone-800 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://i.imgur.com/Rxgy1bd.jpeg')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3 text-center text-xs font-bold uppercase tracking-wide text-white">Integrated Minimalism</div>
+                        </label>
+                        <!-- Card 2 -->
+                        <label class="relative border border-stone-850 rounded-xl overflow-hidden cursor-pointer block hover:border-amber-500 transition-all duration-300 bg-stone-900 group">
+                            <input type="radio" name="style" value="Quiet Luxury" class="sr-only" onclick="goToStep(2)">
+                            <div class="w-full h-32 bg-stone-800 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://i.imgur.com/F0o5gka.jpeg')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3 text-center text-xs font-bold uppercase tracking-wide text-white">Quiet Luxury</div>
+                        </label>
+                        <!-- Card 3 -->
+                        <label class="relative border border-stone-850 rounded-xl overflow-hidden cursor-pointer block hover:border-amber-500 transition-all duration-300 bg-stone-900 group">
+                            <input type="radio" name="style" value="American Traditional" class="sr-only" onclick="goToStep(2)">
+                            <div class="w-full h-32 bg-stone-800 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://i.imgur.com/qC8OADh.jpeg')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3 text-center text-xs font-bold uppercase tracking-wide text-white">American Traditional</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Market Routing & Verification -->
+                <div class="quiz-step" id="step2">
+                    <h2 class="text-xs font-bold uppercase tracking-widest mb-4 text-stone-400 text-center">2. Routing & Verification</h2>
+                    
+                    <!-- Market Selector (Hierarchical Dropdown Grouping - No Chinese) -->
+                    <div class="mb-4">
+                        <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-500 mb-1.5">Target Destination Market</label>
+                        <select name="market" id="marketSelect" class="w-full bg-stone-900 border border-stone-800 rounded-lg px-3 py-3 text-xs text-stone-100 focus:outline-none focus:border-amber-500 font-semibold appearance-none cursor-pointer">
+                            <optgroup label="Middle East / GCC" class="bg-stone-950 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="UAE" class="bg-stone-900 text-stone-100">UAE / Dubai (AED)</option>
+                                <option value="SA" class="bg-stone-900 text-stone-100">Saudi Arabia (SAR)</option>
+                            </optgroup>
+                            <optgroup label="Oceania" class="bg-stone-950 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="AU" class="bg-stone-900 text-stone-100">Australia (AUD)</option>
+                                <option value="NZ" class="bg-stone-900 text-stone-100">New Zealand (NZD)</option>
+                            </optgroup>
+                            <optgroup label="North America" class="bg-stone-955 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="US" class="bg-stone-900 text-stone-100">United States (USD)</option>
+                                <option value="CA" class="bg-stone-900 text-stone-100">Canada (CAD)</option>
+                            </optgroup>
+                            <optgroup label="Europe" class="bg-stone-950 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="UK" class="bg-stone-900 text-stone-100">United Kingdom (GBP)</option>
+                                <option value="DE" class="bg-stone-900 text-stone-100">Germany & Europe (EUR)</option>
+                            </optgroup>
+                            <optgroup label="Southeast & East Asia" class="bg-stone-950 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="MY" class="bg-stone-900 text-stone-100">Malaysia (MYR)</option>
+                                <option value="KH" class="bg-stone-900 text-stone-100">Cambodia (USD)</option>
+                                <option value="MN" class="bg-stone-900 text-stone-100">Mongolia (USD)</option>
+                            </optgroup>
+                            <optgroup label="Global Options" class="bg-stone-950 text-stone-500 text-[10px] uppercase tracking-wider font-bold">
+                                <option value="GLOBAL" class="bg-stone-900 text-stone-100">Other Jurisdictions (USD)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Identity Selector -->
+                    <div class="mb-4">
+                        <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-500 mb-1.5">Procurement Profile</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 border border-stone-850 rounded-lg cursor-pointer hover:bg-stone-900 bg-stone-900/30 transition-all">
+                                <input type="radio" name="identity" value="C-Homeowner / Private Villa Project" checked class="h-3.5 w-3.5 text-amber-500 focus:ring-0 bg-stone-950 border-stone-800">
+                                <span class="ml-3 text-xs font-semibold text-stone-300">Homeowner / Private Villa Project</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-stone-850 rounded-lg cursor-pointer hover:bg-stone-900 bg-stone-900/30 transition-all">
+                                <input type="radio" name="identity" value="B-Contractor / Interior Designer / Wholesaler" class="h-3.5 w-3.5 text-amber-500 focus:ring-0 bg-stone-950 border-stone-800">
+                                <span class="ml-3 text-xs font-semibold text-stone-300">Contractor / Interior Designer / Wholesaler</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="mb-6">
+                        <label for="email" class="block text-[10px] uppercase tracking-widest font-bold text-stone-500 mb-1.5">Corporate / Project Email</label>
+                        <input type="email" id="email" name="email" required placeholder="architect@company.com" class="w-full bg-stone-900 border border-stone-800 rounded-lg px-3 py-3 text-xs text-stone-100 focus:outline-none focus:border-amber-500 transition-all placeholder-stone-700 font-semibold">
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="w-full bg-amber-500 text-stone-950 text-center font-black py-3.5 rounded-lg uppercase tracking-widest text-xs hover:bg-amber-400 transition-all duration-300 shadow-lg shadow-amber-500/10 cursor-pointer">
+                        Analyze Supply Chain Gap
+                    </button>
+                </div>
+
+                <!-- STEP 3: Matrix Supply Chain Report -->
+                <div class="quiz-step" id="step3">
+                    <div class="text-center mb-4">
+                        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black tracking-widest uppercase rounded px-2.5 py-0.5">
+                            Ex-Factory Verified
+                        </span>
+                        <h2 class="text-lg font-black uppercase tracking-tight mt-1.5">Cost Mitigation Matrix</h2>
+                        <p class="text-[10px] text-stone-500 mt-0.5" id="metric-sub">Regional Showroom Markups vs Joysource Production Line</p>
+                    </div>
+
+                    <!-- 1. PRICING ENGINE (FORCED TWO-LINE SPLIT LOGIC) -->
+                    <div class="border border-stone-900 rounded-xl overflow-hidden mb-4 bg-stone-900/20 shadow-xl">
+                        <div class="bg-stone-900/80 px-3 py-2 text-left text-[10px] font-black text-stone-400 border-b border-stone-850 flex justify-between uppercase tracking-wider">
+                            <span>📐 Base Configuration: ~6 Linear Metres</span>
+                            <span class="text-amber-500 font-black" id="currency-label">AUD</span>
+                        </div>
+
+                        <div class="p-3 flex justify-between items-center border-b border-stone-900/60">
+                            <span class="text-[11px] text-stone-500 font-bold uppercase tracking-wider">Local Showroom Markups</span>
+                            <span class="text-stone-400 line-through text-xs font-black" id="local-showroom-price">$28,500 - $41,000</span>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-stone-900 to-stone-950 p-4 text-left relative border-b border-stone-900">
+                            <p class="text-[9px] uppercase font-black tracking-widest text-stone-500">Joysource Ex-Factory Direct</p>
+                            
+                            <!-- Split Pricing Row Presentation -->
+                            <div class="mt-2 w-full flex flex-col gap-1.5">
+                                <div class="flex justify-between items-center w-full">
+                                    <span id="factory-price-min" class="text-4xl font-black text-amber-400 tracking-tight leading-none whitespace-nowrap">$9,200 -</span>
+                                    <span class="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded uppercase tracking-wide h-fit">Save 65%</span>
+                                </div>
+                                <div class="flex justify-start w-full pl-[38%]">
+                                    <span id="factory-price-max" class="text-4xl font-black text-amber-400 tracking-tight leading-none whitespace-nowrap">$14,600</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-[10px] font-bold text-stone-400 mt-2.5" id="unit-price">*Averaging $1,500 / Linear Metre</p>
+                            
+                            <!-- Wholesale B2B Badge -->
+                            <div id="b2b-badge" class="absolute bottom-4 right-4 bg-emerald-500 text-stone-950 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider hidden">
+                                Wholesale Tier
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. HIGH WEIGHT TRUST ANCHOR CARDS (HALF-WIDTH LEFT-ALIGNED TEXT WITH GRADIENT SHADOW) -->
+                    <div id="case-card" class="relative rounded-xl overflow-hidden h-56 mb-4 shadow-xl border border-stone-900 bg-cover bg-center transition-all duration-500">
+                        <!-- Left-to-right deep mask gradient shading -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/75 via-black/35 to-transparent z-10"></div>
+                        
+                        <!-- Text limited tightly to the left zone (max-w-[55%]) -->
+                        <div class="absolute inset-0 z-20 p-5 flex flex-col justify-between text-left max-w-[55%]">
+                            <div>
+                                <span class="text-[9px] font-black uppercase tracking-widest text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20 whitespace-nowrap w-max block">Global Track Record</span>
+                                <h3 id="case-title" class="text-xs font-black text-white mt-2 uppercase tracking-wide leading-tight">PROJECT: BURJ KHALIFA APARTMENT</h3>
+                            </div>
+                            <p id="case-desc" class="text-[10px] text-stone-200 leading-relaxed font-medium">
+                                Customized to 828m iconic heights, blending sleek lines with automated factory engineering.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3. RATIONAL INDUSTRIAL MATERIAL BARS (5-COLUMN NON-WRAPPING GRID) -->
+                    <div class="p-3 bg-stone-900/10 border border-stone-900 rounded-xl space-y-3 text-[11px] mb-4 w-full">
+                        <!-- Row 1 -->
+                        <div class="grid grid-cols-5 gap-x-3 items-center w-full border-b border-stone-900/60 pb-2">
+                            <span class="col-span-3 text-left text-[11px] font-medium text-stone-500 uppercase tracking-wide">Solid Cabinetry Core (E1 Moisture-Resistant Plywood)</span>
+                            <span class="col-span-2 text-right text-[11px] font-bold text-amber-500 uppercase tracking-wide whitespace-nowrap">HOMAG Precision</span>
+                        </div>
+                        <!-- Row 2 -->
+                        <div class="grid grid-cols-5 gap-x-3 items-center w-full border-b border-stone-900/60 pb-2">
+                            <span class="col-span-3 text-left text-[11px] font-medium text-stone-500 uppercase tracking-wide">Premium Finished Joinery (Anti-Scratch / High-Gloss Lacquer)</span>
+                            <span class="col-span-2 text-right text-[11px] font-bold text-amber-500 uppercase tracking-wide whitespace-nowrap">Automated Finish</span>
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="grid grid-cols-5 gap-x-3 items-center w-full pb-1">
+                            <span class="col-span-3 text-left text-[11px] font-medium text-stone-500 uppercase tracking-wide">Hardware Array (Integrated Soft-Close Matrix)</span>
+                            <span class="col-span-2 text-right text-[11px] font-bold text-amber-500 uppercase tracking-wide whitespace-nowrap">DTC / Blum System</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. GLOBAL PARTNERS LOGO WALL (FORCED PURE WHITE GRAPHICS) -->
+                    <div class="mb-4">
+                        <p class="text-center text-[9px] uppercase font-black tracking-[0.15em] text-stone-600 mb-2.5">Enterprise Infrastructure Trusted By</p>
+                        <div class="grid grid-cols-3 gap-y-3 gap-x-4 px-2">
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/OB2fElI.png" alt="IKEA" class="logo-deactivated max-h-full max-w-full"></div>
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/r27e525.png" alt="DANUBE" class="logo-deactivated max-h-full max-w-full"></div>
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/MKp7VJj.png" alt="ASHLEY" class="logo-deactivated max-h-full max-w-full"></div>
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/76SZKRF.png" alt="DAMAC" class="logo-deactivated max-h-full max-w-full"></div>
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/dOimyOV.png" alt="MARRIOTT" class="logo-deactivated max-h-full max-w-full"></div>
+                            <div class="h-6 flex items-center justify-center"><img src="https://i.imgur.com/CSC9a8d.png" alt="HILTON" class="logo-deactivated max-h-full max-w-full"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 5. CALL TO ACTION -->
+                    <div class="space-y-2">
+                        <a id="whatsapp-btn" href="#" target="_blank" class="block w-full bg-[#25D366] text-stone-950 text-center font-black py-3.5 rounded-lg uppercase tracking-widest hover:bg-[#20ba5a] transition-all text-xs shadow-lg shadow-[#25D366]/10">
+                            Secure Production Slot & Spec Sheets
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+        </main>
+
+        <!-- Global Compliance Footing -->
+        <footer class="text-center py-2 border-t border-stone-900 text-[9px] text-stone-600 font-bold tracking-widest uppercase">
+            JOYSOURCE • Since 2014 • amfori BSCI / FSC / ISO9001 Certified Factory Infrastructure
+        </footer>
+    </div>
+
+    <!-- Scripting Routing Engine -->
+    <script>
+        const TARGET_WHATSAPP_NODE = "8615365555755"; 
+
+        function goToStep(step) {
+            document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+        }
+
+        function handleFunnelSubmit(event) {
+            event.preventDefault();
+            
+            const data = new FormData(event.target);
+            const selectedStyle = data.get('style');
+            const targetMarket = data.get('market');
+            const identityProfile = data.get('identity');
+            const userEmail = data.get('email');
+
+            // Formspree Asynchronous Transmission Engine
+            fetch('https://formspree.io/f/mlgywjnz', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).catch(error => console.error('Data transmission failed:', error));
+
+            // Complex Regional Data Mapping & Detailed Country Dynamic Routing Logic
+            if (targetMarket === 'UAE') {
+                document.getElementById('currency-label').innerText = 'AED';
+                document.getElementById('local-showroom-price').innerText = 'Dhs 65,000 - Dhs 95,000';
+                document.getElementById('factory-price-min').innerText = 'Dhs 22,000 -';
+                document.getElementById('factory-price-max').innerText = 'Dhs 34,500';
+                document.getElementById('unit-price').innerText = '*Averaging Dhs 3,800 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'BURJ KHALIFA PRIVATE APARTMENT';
+                document.getElementById('case-desc').innerText = 'Crafted for premium private residences in Dubai. Successfully delivered custom layouts blending structural elegance at 828m tower heights.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/Yqj3vSx.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Dubai Showroom Markups vs direct shipping from production facility.';
+            } 
+            else if (targetMarket === 'SA') {
+                document.getElementById('currency-label').innerText = 'SAR';
+                document.getElementById('local-showroom-price').innerText = 'SR 66,500 - SR 98,000';
+                document.getElementById('factory-price-min').innerText = 'SR 22,500 -';
+                document.getElementById('factory-price-max').innerText = 'SR 35,000';
+                document.getElementById('unit-price').innerText = '*Averaging SR 3,900 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'BURJ KHALIFA APARTMENT CORE';
+                document.getElementById('case-desc').innerText = 'GCC standardization structural matrix optimized. Proven engineering capability trusted by luxury private villa projects in Riyadh and Jeddah markets.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/Yqj3vSx.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Saudi Showroom Markups vs direct shipping from production facility.';
+            }
+            else if (targetMarket === 'AU') {
+                document.getElementById('currency-label').innerText = 'AUD';
+                document.getElementById('local-showroom-price').innerText = '$26,000 - $39,500';
+                document.getElementById('factory-price-min').innerText = '$8,900 -';
+                document.getElementById('factory-price-max').innerText = '$13,800';
+                document.getElementById('unit-price').innerText = '*Averaging $1,500 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'AUSTRALIA LUXURY TOWNHOUSE';
+                document.getElementById('case-desc').innerText = 'Premium structural pipeline execution featuring high-end 40mm stone integrations and automated joinery layout across major developments.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/VzeUkc4.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Australian Showroom Markups vs direct container-level shipping.';
+            } 
+            else if (targetMarket === 'NZ') {
+                document.getElementById('currency-label').innerText = 'NZD';
+                document.getElementById('local-showroom-price').innerText = '$28,000 - $42,000';
+                document.getElementById('factory-price-min').innerText = '$9,500 -';
+                document.getElementById('factory-price-max').innerText = '$14,500';
+                document.getElementById('unit-price').innerText = '*Averaging $1,600 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'AUSTRALIA LUXURY TOWNHOUSE DEPLOYMENT';
+                document.getElementById('case-desc').innerText = 'Oceania structural baseline optimization active. Successfully completed luxury multi-unit open-plan residential joinery arrays with enhanced moisture barrier parameters.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/VzeUkc4.jpeg')";
+                document.getElementById('metric-sub').innerText = 'New Zealand Showroom Markups vs direct container-level shipping.';
+            }
+            else if (targetMarket === 'US') {
+                document.getElementById('currency-label').innerText = 'USD';
+                document.getElementById('local-showroom-price').innerText = '$19,000 - $28,000';
+                document.getElementById('factory-price-min').innerText = '$6,800 -';
+                document.getElementById('factory-price-max').innerText = '$10,500';
+                document.getElementById('unit-price').innerText = '*Averaging $1,150 / 10x10 Baseline';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'Joysource North American logistics pipeline active. Shipping daily via US overseas warehouses to guarantee rapid custom delivery and localized structural support.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'US Regional Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'CA') {
+                document.getElementById('currency-label').innerText = 'CAD';
+                document.getElementById('local-showroom-price').innerText = '$25,000 - $37,000';
+                document.getElementById('factory-price-min').innerText = '$9,000 -';
+                document.getElementById('factory-price-max').innerText = '$13,900';
+                document.getElementById('unit-price').innerText = '*Averaging $1,500 / 10x10 Baseline';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'North American distribution layout verified. Managed complex cross-border custom workflows with active structural coordination for premium interior systems.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Canadian Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'UK') {
+                document.getElementById('currency-label').innerText = 'GBP';
+                document.getElementById('local-showroom-price').innerText = '£16,000 - £24,000';
+                document.getElementById('factory-price-min').innerText = '£5,800 -';
+                document.getElementById('factory-price-max').innerText = '£8,900';
+                document.getElementById('unit-price').innerText = '*Averaging £980 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = '100% compliant with strict European E1 environmental and structural safety baselines. Processed via fully automated European HOMAG lines.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'UK Local Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'DE') {
+                document.getElementById('currency-label').innerText = 'EUR';
+                document.getElementById('local-showroom-price').innerText = '€18,000 - €26,500';
+                document.getElementById('factory-price-min').innerText = '€6,200 -';
+                document.getElementById('factory-price-max').innerText = '€9,800';
+                document.getElementById('unit-price').innerText = '*Averaging €1,050 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'European central supply chain infrastructure optimization. Full integration of German precision engineering pipelines backed by dedicated Western Europe distribution nodes.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'European Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'MY') {
+                document.getElementById('currency-label').innerText = 'MYR';
+                document.getElementById('local-showroom-price').innerText = 'RM 45,000 - RM 68,000';
+                document.getElementById('factory-price-min').innerText = 'RM 15,500 -';
+                document.getElementById('factory-price-max').innerText = 'RM 24,000';
+                document.getElementById('unit-price').innerText = '*Averaging RM 2,600 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'Tropical Climate Structural Optimization Active. Premium anti-moisture core array with seamless laser edge banding deployed across major residential blocks in Kuala Lumpur and Penang.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Malaysia Showroom Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'KH') {
+                document.getElementById('currency-label').innerText = 'USD';
+                document.getElementById('local-showroom-price').innerText = '$18,000 - $26,000';
+                document.getElementById('factory-price-min').innerText = '$6,200 -';
+                document.getElementById('factory-price-max').innerText = '$9,500';
+                document.getElementById('unit-price').innerText = '*Averaging $1,050 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'Tropical atmospheric protection engineering matrix deployed. Successfully finalized large-scale cabinetry solutions optimized for modern architectural urban layouts in Phnom Penh.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Cambodia Engineering Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else if (targetMarket === 'MN') {
+                document.getElementById('currency-label').innerText = 'USD';
+                document.getElementById('local-showroom-price').innerText = '$22,000 - $32,000';
+                document.getElementById('factory-price-min').innerText = '$7,800 -';
+                document.getElementById('factory-price-max').innerText = '$11,900';
+                document.getElementById('unit-price').innerText = '*Averaging $1,300 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'Extreme Temperature Material Stability Active. Structural joinery engineering calibrated to withstand severe -40°C thermal thresholds. Direct rail-land routing active to Ulaanbaatar.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Mongolia Local Markups vs Direct Factory Supply Chain Matrix.';
+            }
+            else {
+                document.getElementById('currency-label').innerText = 'USD';
+                document.getElementById('local-showroom-price').innerText = '$19,000 - $28,000';
+                document.getElementById('factory-price-min').innerText = '$6,800 -';
+                document.getElementById('factory-price-max').innerText = '$10,500';
+                document.getElementById('unit-price').innerText = '*Averaging $1,150 / Linear Metre';
+                
+                document.getElementById('case-title').innerText = 'EXECUTIVO INTERIORES CLÍNICA';
+                document.getElementById('case-desc').innerText = 'Global structural custom furniture supplier footprint. Proven track record successfully delivering premium custom interior systems across 50+ sovereign territories.';
+                document.getElementById('case-card').style.backgroundImage = "url('https://i.imgur.com/BGy9rxi.jpeg')";
+                document.getElementById('metric-sub').innerText = 'Regional Import Markups vs Direct Factory Supply Chain Matrix.';
+            }
+
+            if (identityProfile === 'B') {
+                document.getElementById('b2b-badge').classList.remove('hidden');
+            } else {
+                document.getElementById('b2b-badge').classList.add('hidden');
+            }
+
+            // Deep-Link WhatsApp Message Formulator
+            let messageText = "";
+            if (identityProfile === 'B') {
+                messageText = `Hi Joysource, I am a commercial contractor/designer based in the [${targetMarket}] region. I completed your supply chain matrix for the [${selectedStyle}] design profile. My verified email is ${userEmail}. Send over the Factory Wholesale Catalog, structural parameters, and technical spec sheets to my WhatsApp.`;
+            } else {
+                messageText = `Hi Joysource, I am calculating the joinery budget for my custom layout in [${targetMarket}]. I selected the [${selectedStyle}] profile on your TikTok matrix. My email is ${userEmail}. I would like to lock in this ex-factory baseline valuation and request a structured blueprint consultation over WhatsApp.`;
+            }
+
+            document.getElementById('whatsapp-btn').href = `https://wa.me/${TARGET_WHATSAPP_NODE}?text=${encodeURIComponent(messageText)}`;
+            goToStep(3);
+        }
+    </script>
+</body>
+</html>
